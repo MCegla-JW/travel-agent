@@ -1,6 +1,7 @@
 import './SignUp.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { signUpService } from '../../services/auth'
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -10,13 +11,27 @@ const SignUp = () => {
         confirmPassword: ''
     })
     const [errorData, setErrorData] = useState({})
+    const navigate = useNavigate()
     
     const handleChange = (e) => {
         const newFormData = {...formData, [e.target.name]: e.target.value}
         setFormData(newFormData)
+        setErrorData({...errorData, [e.target.name]: ''})
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        try {
+            await signUpService(formData)
+            navigate('/auth/sign-in')
+        } catch (error) {
+            if (error.response.status === 500) {
+                setErrorData({message: 'Something went wrong. Please try again.'}) 
+            } else {
+                console.error(error.response.data.backend)
+                setErrorData(error.response.data.frontend)
+            }
+        }
     }
     return (
         <>
@@ -25,21 +40,26 @@ const SignUp = () => {
             <div className='form-control'>
                 <label htmlFor='username'></label>
                 <input type='text' name='username' id='username' placeholder='Username' onChange={handleChange} required />
+                {errorData.username && <p className='error-message'>{errorData.username}</p>}
             </div>
             <div className='form-control'>
                 <label htmlFor='email'></label>
                 <input type='text' name='email' id='email' placeholder='Email' onChange={handleChange} required />
+                {errorData.email && <p className='error-message'>{errorData.email}</p>}
             </div>
             <div className='form-control'>
                 <label htmlFor='password'></label>
                 <input type='password' name='password' id='password' placeholder='Password' onChange={handleChange} required />
+                {errorData.password && <p className='error-message'>{errorData.password}</p>}
             </div>
             <div className='form-control'>
                 <label htmlFor='confirmPassword'></label>
                 <input type='password' name='confirmPassword' id='confirmPassword' placeholder='Confirm Your Password' onChange={handleChange} required />
+                {errorData.confirmPassword && <p className='error-message'>{errorData.confirmPassword}</p>}
             </div>
 
                 <button type='submit'>Create an account</button>
+                {errorData.message && <p className='error-message'>{errorData.message}</p>}
         </form>
         </>
     )
