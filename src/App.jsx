@@ -13,9 +13,9 @@ const App = () => {
     <NavBar />
     <main>
       <Routes>
-        <Route path='/sign-in' element={<SignIn />}/>
-        <Route path='/sign-up' element={<SignUp />}/>
-        <Route path='/*' element={<NotFound/>}/>
+        <Route path='auth/sign-in' element={<SignIn />}/>
+        <Route path='auth/sign-up' element={<SignUp />}/>
+        <Route path='auth/*' element={<NotFound/>}/>
       </Routes>
     </main>
     </>
