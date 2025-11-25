@@ -7,6 +7,8 @@ import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import NotFound from './components/NotFound/NotFound'
 
+import TripOverview from './components/TripOverview/TripOverview'
+
 const App = () => {
   return (
     <>
@@ -15,7 +17,7 @@ const App = () => {
       <Routes>
         <Route path='/sign-in' element={<SignIn />}/>
         <Route path='/sign-up' element={<SignUp />}/>
-        <Route path='/*' element={<NotFound/>}/>
+        <Route path='/*' element={<TripOverview/>}/>
       </Routes>
     </main>
     </>
