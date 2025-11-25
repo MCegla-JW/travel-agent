@@ -4,17 +4,19 @@ import { useContext } from "react";
 
 const NavBar = () => {
     const { user } = useContext(UserContext)
-    console.log('User', user)
   return (
-    <header>
+    <header className='navbar'>
       <div id="brand-logo">
         <Link to="/">🏝️ Travel Agent 🏝️</Link>
       </div>
 
-      <nav className="navbar">
-        <Link to="/auth/sign-in">Sign In</Link>
-        <Link to="/auth/sign-up">Create an account</Link>
-      </nav>
+      <div className='account-link'>
+        {user ? (
+            <Link to='/account'>{user.username}</Link>
+        ): (
+            <Link to='/auth/sign-in'>Touch your dreams</Link>
+        )}
+      </div>
     </header>
   );
 };
