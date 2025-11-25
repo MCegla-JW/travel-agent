@@ -7,8 +7,8 @@ const Account = () => {
     const { user, signOut } = useContext(UserContext)
     return (
         <>  
-            <h3>Hi, {user.username}!</h3>
-            <button>Edit Account</button>
+            {user ? <h3>Hi, {user.username}!</h3> : <p>Signed Out</p>}
+            <button disabled>Edit Account</button>
             <Link to='/' onClick={signOut}><button type='submit'>Sign Out</button></Link>
             <Link to='/trips'><button>Back</button></Link>
         </>
