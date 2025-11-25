@@ -10,6 +10,7 @@ const Account = () => {
             <h3>Hi, {user.username}!</h3>
             <button>Edit Account</button>
             <Link to='/' onClick={signOut}><button type='submit'>Sign Out</button></Link>
+            <Link to='/trips'><button>Back</button></Link>
         </>
     )
 }
