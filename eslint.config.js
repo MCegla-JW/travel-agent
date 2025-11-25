@@ -3,6 +3,7 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import pluginPrettier from 'eslint-plugin-prettier'
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -22,8 +23,21 @@ export default defineConfig([
         sourceType: 'module',
       },
     },
+
+    plugins: {
+      prettier: pluginPrettier,
+    },
+
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Prettier runs as an ESLint rule
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+          semi: false,
+        },
+      ],
     },
   },
 ])
