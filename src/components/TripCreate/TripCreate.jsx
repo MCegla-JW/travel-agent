@@ -2,40 +2,24 @@ import { useContext, useState, useEffect } from 'react'
 import { useParams, useNavigate, Navigate } from 'react-router'
 
 // import { UserContext } from '../../contexts/UserContext.jsx'
-import { tripUpdate, tripShow } from '../../services/trips.js'
+import { tripCreate } from '../../services/trips.js'
 
-import './TripUpdate.module.css'
+import './TripCreate.module.css'
 
-const TripUpdate = () => {
+const TripCreate = () => {
   // const { user } = useContext(UserContext)
-  const [formData, setFormData] = useState({})
-  const [isLoading, setIsLoading] = useState(true)
+  const [formData, setFormData] = useState({
+    owner: '',
+    title: '',
+    description: '',
+    destination: '',
+    country: '',
+    startDate: '',
+    endDate: '',
+    activities: [],
+  })
   const [errorData, setErrorData] = useState({})
-  const { tripId } = useParams()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const { data } = await tripShow(tripId)
-        setFormData(data)
-      } catch (error) {
-        // TODO: Better error handling
-        console.log(error)
-        const { status, data } = error.response
-        if (status === 500) {
-          setErrorData({ message: 'Something went wrong. Please try again.' })
-        } else if (status === 404) {
-          navigate('/page-not-found')
-        } else {
-          setErrorData(data)
-        }
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    getData()
-  }, [tripId, navigate])
 
   const handleChange = (e) => {
     const input = e.target
@@ -45,7 +29,7 @@ const TripUpdate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await tripUpdate(tripId, formData)
+      const { data } = await tripCreate(formData)
       // TODO: Confirm edit
       navigate('/trips/')
     } catch (error) {
@@ -68,10 +52,6 @@ const TripUpdate = () => {
     console.log('Add Activities')
   }
 
-  const handleDeleteTrip = () => {
-    console.log('Add Activities')
-  }
-
   /*
   if (!user) {
     return <Navigate to="/sign-in" />
@@ -81,7 +61,6 @@ const TripUpdate = () => {
     <>
       <h2 className="subheader">Capture your dream</h2>
       <div className="information">
-        {isLoading ? <p>Loading ...</p> :
         <form id="tripForm" onSubmit={handleSubmit}>
           <div className="form-control">
             <label hidden htmlFor="title">
@@ -190,17 +169,11 @@ const TripUpdate = () => {
               <p className="error-message">{errorData.endDate}</p>
             )}
           </div>
-        </form>}
+        </form>
       </div>
       <div className="actions">
         <button className="primary" type="submit" form="tripForm">
-          Confirm changes
-        </button>
-        <button className="secondary" onClick={handleAddActivities} disabled>
-          Add activity
-        </button>
-        <button className="secondary" onClick={handleDeleteTrip} disabled>
-          Delete trip
+          Create
         </button>
         <button className="secondary" onClick={handleReturnToOverview}>
           Return to Overview
@@ -210,4 +183,4 @@ const TripUpdate = () => {
   )
 }
 
-export default TripUpdate
+export default TripCreate

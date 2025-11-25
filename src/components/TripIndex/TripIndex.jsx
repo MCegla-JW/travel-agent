@@ -42,6 +42,7 @@ const TripIndex = () => {
 
   const handleCreateNewTrip = () => {
     console.log('Create New Trip')
+    navigate('/trips/new')
   }
 
   const handleReviewPastTrip = () => {
