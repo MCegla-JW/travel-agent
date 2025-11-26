@@ -13,7 +13,7 @@ const PhotoSlider = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
-        centerPadding: '60px',
+        centerPadding: '80px',
         responsive: [
             { 
                 breakpoint: 600,
@@ -36,7 +36,7 @@ return (
                 borderRadius: 3,
                 overflow: 'hidden',
                 transition: '0.3s',
-                filter: 'grayscale(50%)',
+                // filter: 'grayscale(50%)',
             }}
             className='photo-slide'
             >

@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
-import { Container, Box, Typography, Stack, Button } from '@mui/material'
+import { Box, Typography, Stack, Button } from '@mui/material'
 import PhotoSlider from '../Slider/PhotoSlider'
 
 const Account = () => {
