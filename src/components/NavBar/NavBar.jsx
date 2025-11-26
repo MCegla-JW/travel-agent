@@ -31,7 +31,7 @@ const NavBar = () => {
      </Typography>
      {/* Username or Tagline */}
        {user ? (
-      <Typography variant='h6' color='inherit' component={Link} to='/account' >
+      <Typography variant='h6' color='inherit' component={Link} to='/account' sx={{textDecoration: 'none'}} >
           {user.username}
       </Typography>
        ) : (
