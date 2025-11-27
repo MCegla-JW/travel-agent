@@ -4,7 +4,7 @@ import { useParams, useNavigate, Navigate } from 'react-router'
 import { UserContext } from '../../contexts/UserContext.jsx'
 import { tripCreate } from '../../services/trips.js'
 
-import './TripCreate.module.css'
+import { Button, Box, Typography, Paper, TextField, Stack } from '@mui/material'
 
 const TripCreate = () => {
   const { user } = useContext(UserContext)
@@ -12,8 +12,7 @@ const TripCreate = () => {
     owner: '',
     title: '',
     description: '',
-    destination: '',
-    country: '',
+    location : '',
     startDate: '',
     endDate: '',
     activities: [],
@@ -44,6 +43,7 @@ const TripCreate = () => {
     }
   }
 
+
   const handleReturnToOverview = () => {
     navigate('/trips')
   }
@@ -55,128 +55,105 @@ const TripCreate = () => {
   if (!user) return <Navigate to="/auth/sign-in" />
 
   return (
-    <>
-      <h2 className="subheader">Capture your dream</h2>
-      <div className="information">
-        <form id="tripForm" onSubmit={handleSubmit}>
-          <div className="form-control">
-            <label hidden htmlFor="title">
-              Title
-            </label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Title"
-              required
-              value={formData.title}
-              onChange={handleChange}
-            />
+      <Box 
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        p: 2,
+      }}>
+      <Paper 
+      elevation={3}
+      sx={{
+        p: 4,
+        width: { xs: '90%', sm: 400 },
+        bgcolor: '#F5F5F5'
+      }}
+      >
+      <Typography className='subheader' variant='h4' align='center' gutterBottom>
+      Capture your dream
+      </Typography>
+      <Stack 
+      className='information'
+      component='form'
+      spacing={2}
+      onSubmit={handleSubmit}
+      id='tripForm'
+      >
+        <TextField
+        label='Title'
+        variant='outlined'
+        type='text'
+        name='title'
+        value={formData.title}
+        onChange={handleChange}
+        fullWidth
+        required
+        />
             {errorData.title && (
               <p className="error-message">{errorData.title}</p>
             )}
-          </div>
-
-          <div className="form-control">
-            <label hidden htmlFor="description">
-              Description
-            </label>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              placeholder="description"
-              required
-              value={formData.description}
-              onChange={handleChange}
-            />
+          <TextField 
+          label='Description'
+          variant='outlined'
+          type='text'
+          name='description'
+          value={formData.description}
+          onChange={handleChange}
+          fullWidth
+        required
+          />
             {errorData.description && (
-              <p className="error-message">{errorData.description}</p>
+              <p className="error-message">{errorData.descirption}</p>
             )}
-          </div>
-
-          <div className="form-control">
-            <label hidden htmlFor="destination">
-              Description
-            </label>
-            <input
-              type="text"
-              name="destination"
-              id="destination"
-              placeholder="destination"
-              required
-              value={formData.destination}
-              onChange={handleChange}
-            />
-            {errorData.destination && (
-              <p className="error-message">{errorData.destination}</p>
+          <TextField 
+          label='Location'
+          variant='outlined'
+          type='text'
+          name='location'
+          value={formData.location}
+          onChange={handleChange}
+          fullWidth
+          required
+          />
+            {errorData.location && (
+              <p className="error-message">{errorData.location}</p>
             )}
-          </div>
-
-          <div className="form-control">
-            <label hidden htmlFor="country">
-              Country
-            </label>
-            <input
-              type="text"
-              name="country"
-              id="country"
-              placeholder="country"
-              required
-              value={formData.country}
-              onChange={handleChange}
-            />
-            {errorData.country && (
-              <p className="error-message">{errorData.country}</p>
-            )}
-          </div>
-
-          <div className="form-control">
-            <label hidden htmlFor="startDate">
-              Start Date
-            </label>
-            <input
-              type="text"
-              name="startDate"
-              id="startDate"
-              placeholder="startDate"
-              required
-              value={formData.startDate}
-              onChange={handleChange}
-            />
+          <TextField 
+          label='Start Date'
+          variant='outlined'
+          type='text'
+          name='startDate'
+          value={formData.startDate}
+          onChange={handleChange}
+          fullWidth
+          required
+          />
             {errorData.startDate && (
               <p className="error-message">{errorData.startDate}</p>
             )}
-          </div>
-
-          <div className="form-control">
-            <label hidden htmlFor="endDate">
-              End Date
-            </label>
-            <input
-              type="text"
-              name="endDate"
-              id="endDate"
-              placeholder="endDate"
-              required
-              value={formData.endDate}
-              onChange={handleChange}
-            />
+          <TextField 
+          label='End Date'
+          variant='outlined'
+          type='text'
+          name='endDate'
+          value={formData.endDate}
+          onChange={handleChange}
+          fullWidth
+          required
+          />
             {errorData.endDate && (
               <p className="error-message">{errorData.endDate}</p>
             )}
-          </div>
-        </form>
-      </div>
-      <div className="actions">
-        <button className="primary" type="submit" form="tripForm">
+      <Button type='submit' variant='contained' className='primary' form='tripForm'>
           Create
-        </button>
-        <button className="secondary" onClick={handleReturnToOverview}>
+        </Button>
+        <Button variant='contained' className="secondary" onClick={handleReturnToOverview}>
           Return to Overview
-        </button>
-      </div>
-    </>
+        </Button>
+        </Stack>
+        </Paper>
+        </Box>
   )
 }
 
