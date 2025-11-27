@@ -36,7 +36,7 @@ const Home = () => {
                         <PhotoSlider/>
                         </Box>
                        {/* Action Buttons */} 
-                    <Stack direction='row' spacing={2}>
+                    <Stack direction='row' spacing={1}>
                         <Button component={Link} to='/auth/sign-in' variant='contained' >
                         Sign In
                         </Button>

@@ -3,8 +3,9 @@ import { useNavigate, Navigate } from 'react-router'
 
 import { UserContext } from '../../contexts/UserContext.jsx'
 import { tripIndex } from '../../services/trips'
+import TripSlider from '../Slider/TripSlider.jsx'
 
-import { Box, Paper, Typography, Stack, Button } from '@mui/material'
+import { Box, Typography, Button, CircularProgress } from '@mui/material'
 
 import './TripIndex.module.css'
 
@@ -56,7 +57,6 @@ const TripIndex = () => {
   if (!user) return <Navigate to="/auth/sign-in" />
 
   return (
-    <>
       <Box
         sx={{
           display: 'flex',
@@ -67,56 +67,48 @@ const TripIndex = () => {
           textAlign: 'center',
         }}
       >
-        <Box sx={{ mb: 4, textAlign: 'center'}}>
+        <Box sx={{ mb: 4, textAlign: 'center' }}>
           <Typography
             variant="h4"
             align="center"
             className="subheader"
             gutterBottom
+            sx={{ mb: 4}}
           >
             Trips
           </Typography>
-          </Box>
-          {/*Slider with trips */}
-          <div className="information">
-            {isLoading ? (
-              <p>Loading ...</p>
-            ) : (
-              <ul>
-                {trips.map((trip) => {
-                  return (
-                    <li key={trip._id} onClick={() => handleEditTrip(trip._id)}>
-                      <h3>{trip.title}</h3>
-                      <p>{trip.description}</p>
-                      <p>
-                        {trip.destination}, {trip.country}
-                      </p>
-                      <p>
-                        {trip.startDate}-{trip.endDate}
-                      </p>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </div>
-          <Button
-            variant="contained"
-            className="primary"
-            onClick={handleCreateNewTrip}
-          >
-            Create new trip
-          </Button>
-          <Button
-            variant="contained"
-            className="secondary"
-            onClick={handleReviewPastTrip}
-            disabled
-          >
-            Review past trip
-          </Button>
+        </Box>
+        {/* Loading Spinner */}
+          {isLoading ? (
+            <Box sx={{ mt: 6 }}>
+              <CircularProgress size={50}/>
+            <Typography sx={{ mt: 2, color: 'gray'}}>Loading trips ...</Typography>
+            </Box>
+          ) : (
+        <>
+        {/*Slider with trips */}
+        <Box sx={{ width: '100%', maxWidth: 800, mb: 4 }}>
+          <TripSlider trips={trips} />
+        </Box>
+        </>
+          )}
+        {/* Buttons */}
+        <Button
+          variant="contained"
+          className="primary"
+          onClick={handleCreateNewTrip}
+        >
+          Create new trip
+        </Button>
+        <Button
+          variant="contained"
+          className="secondary"
+          onClick={handleReviewPastTrip}
+          disabled
+        >
+          Review past trip
+        </Button>
       </Box>
-    </>
   )
 }
 

@@ -12,8 +12,7 @@ const TripCreate = () => {
     owner: '',
     title: '',
     description: '',
-    destination: '',
-    country: '',
+    location : '',
     startDate: '',
     endDate: '',
     activities: [],
@@ -34,18 +33,16 @@ const TripCreate = () => {
       navigate('/trips/')
     } catch (error) {
       // TODO: Better error handling
-const res = error.response
-      if (!res) {
-        return setErrorData({ message: 'Network error. Try again.'})
+      console.log(error)
+      if (error.response.status === 500) {
+        return setErrorData({
+          message: 'Something went wrong. Please try again.',
+        })
       }
-      if (res.status === 500) {
-        setErrorData({ message: 'Something went wrong. Please try again.'})
-      } else {
-        console.error(res.data.backend)
-        setErrorData(error.data.frontend)
-      }
+      setErrorData(error.response.data)
     }
   }
+
 
   const handleReturnToOverview = () => {
     navigate('/trips')
@@ -107,33 +104,20 @@ const res = error.response
         required
           />
             {errorData.description && (
-              <p className="error-message">{errorData.description}</p>
+              <p className="error-message">{errorData.descirption}</p>
             )}
           <TextField 
-          label='Destination'
+          label='Location'
           variant='outlined'
           type='text'
-          name='destination'
-          value={formData.destination}
+          name='location'
+          value={formData.location}
           onChange={handleChange}
           fullWidth
           required
           />
-            {errorData.destination && (
-              <p className="error-message">{errorData.destination}</p>
-            )}
-          <TextField 
-          label='Country'
-          variant='outlined'
-          type='text'
-          name='country'
-          value={formData.country}
-          onChange={handleChange}
-          fullWidth
-          required
-          />
-            {errorData.country && (
-              <p className="error-message">{errorData.country}</p>
+            {errorData.location && (
+              <p className="error-message">{errorData.location}</p>
             )}
           <TextField 
           label='Start Date'
