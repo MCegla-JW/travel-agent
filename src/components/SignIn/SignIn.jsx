@@ -4,7 +4,7 @@ import { signInService } from "../../services/auth";
 import { getUserFromToken, setToken } from "../../utils/token";
 import { UserContext } from "../../contexts/UserContext";
 
-import { Typography, TextField, Button, Box, Stack, Paper } from "@mui/material";
+import { Typography, TextField, Button, Box, Stack, Paper, CircularProgress } from "@mui/material";
 // import FormCard from "../../theme/formCard";
 // import FormRow from "../../theme/FormRom";
 
@@ -16,6 +16,7 @@ const SignIn = () => {
   });
   const [errorData, setErrorData] = useState({});
   const navigate = useNavigate();
+  const [ isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,6 +25,7 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await signInService(formData);
       const token = response.data.token
@@ -41,6 +43,8 @@ const SignIn = () => {
         console.error(res.data.backend);
         setErrorData(res.data.frontend);
       }
+    } finally {
+      setIsLoading(false)
     }
   };
   return (
@@ -97,7 +101,11 @@ const SignIn = () => {
             <p className="error-message">{errorData.password}</p>
           )}
         <Button type='submit' variant="contained">
-          Sign In
+          {isLoading ? (
+            <CircularProgress size={24}/>
+          ) : (
+          'Sign In'
+          )}
         </Button>
         {errorData.message && (
           <p className="error-message">{errorData.message}</p>

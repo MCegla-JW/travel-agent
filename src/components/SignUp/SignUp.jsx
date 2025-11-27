@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { signUpService } from "../../services/auth";
 
-import { Typography, TextField, Button, Box, Stack, Paper } from "@mui/material";
+import { Typography, TextField, Button, Box, Stack, Paper, CircularProgress } from "@mui/material";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const SignUp = () => {
   });
   const [errorData, setErrorData] = useState({});
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +22,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await signUpService(formData);
       navigate("/auth/sign-in");
@@ -35,6 +37,8 @@ const SignUp = () => {
         console.error(res.data.backend);
         setErrorData(res.data.frontend);
       }
+    } finally {
+      setIsLoading(false)
     }
   };
   return (
@@ -117,7 +121,11 @@ const SignUp = () => {
             <p className="error-message">{errorData.confirmPassword}</p>
           )}
           <Button type='submit' variant="contained">
-          Create Account
+          {isLoading ? (
+            <CircularProgress size={24} /> 
+          ) : (
+            'Create Account'
+          )}
         </Button>
         {errorData.message && (
           <p className="error-message">{errorData.message}</p>

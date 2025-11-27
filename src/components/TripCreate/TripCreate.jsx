@@ -27,6 +27,10 @@ const TripCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const dateFormConversion = {
+      ...formData, startDate: new Date(formData.startDate).toISOString(),
+      endDate: new Date(formData.endDate).toISOString()
+    }
     try {
       const { data } = await tripCreate(formData)
       // TODO: Confirm edit
@@ -122,12 +126,13 @@ const TripCreate = () => {
           <TextField 
           label='Start Date'
           variant='outlined'
-          type='text'
+          type='date'
           name='startDate'
           value={formData.startDate}
           onChange={handleChange}
           fullWidth
           required
+          focused
           />
             {errorData.startDate && (
               <p className="error-message">{errorData.startDate}</p>
@@ -135,12 +140,13 @@ const TripCreate = () => {
           <TextField 
           label='End Date'
           variant='outlined'
-          type='text'
+          type='date'
           name='endDate'
           value={formData.endDate}
           onChange={handleChange}
           fullWidth
           required
+          focused
           />
             {errorData.endDate && (
               <p className="error-message">{errorData.endDate}</p>
