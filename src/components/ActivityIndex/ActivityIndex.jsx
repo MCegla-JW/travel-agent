@@ -54,7 +54,6 @@ const ActivityIndex = () => {
   const handleAddExpertActivity = async () => {
     const { data } = await activityPropose(tripId)
     setActivities([...activities, ...data.trip.activities])
-    console.log(aiTrip)
   }
 
   if (!user) return <Navigate to="/auth/sign-in" />
@@ -130,43 +129,16 @@ const ActivityIndex = () => {
                         </IconButton>
                       )}
                     </Typography>
-                    <Typography>
-                      {activity.description}
-                      {activity.websiteUrl && (
-                        <IconButton
-                          onClick={() =>
-                            window.open(
-                              activity.websiteUrl,
-                              '_blank',
-                              'noopener,noreferrer',
-                            )
-                          }
-                          edge="end"
-                        >
-                          <OpenInNewIcon />
-                        </IconButton>
-                      )}
-                    </Typography>
+                    <Typography>{activity.description}</Typography>
 
-                    <ButtonGroup variant="outlined">
-                      <Button
-                        onClick={() =>
-                          navigate(
-                            `/trips/${tripId}/activities/${activity._id}`,
-                          )
-                        }
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          console.log('Delete Activity not implemented')
-                        }
-                        disabled
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
+                    <Button
+                      variant="outlined"
+                      onClick={() =>
+                        navigate(`/trips/${tripId}/activities/${activity._id}`)
+                      }
+                    >
+                      Edit
+                    </Button>
                   </AccordionDetails>
                 </Accordion>
               ))}
@@ -175,16 +147,16 @@ const ActivityIndex = () => {
                   variant="contained"
                   onClick={() => navigate(`/trips/${tripId}/activities/new`)}
                 >
-                  Add activity
+                  Add
                 </Button>
                 <Button variant="outlined" onClick={handleAddExpertActivity}>
-                  Add expert activities
+                  Generate
                 </Button>
                 <Button
                   variant="outlined"
                   onClick={() => navigate(`/trips/${tripId}`)}
                 >
-                  Return to trip
+                  Return
                 </Button>
               </Stack>
             </Stack>
