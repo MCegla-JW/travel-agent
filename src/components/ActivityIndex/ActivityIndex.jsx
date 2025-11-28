@@ -84,7 +84,7 @@ const ActivityIndex = () => {
           }}
         >
           <Typography variant="h5" align="center" gutterBottom>
-            Experience the Unknown
+            Add Activities
           </Typography>
           {isLoading ? (
             <Box
@@ -147,7 +147,7 @@ const ActivityIndex = () => {
                   </AccordionDetails>
                 </Accordion>
               ))}
-              <ButtonGroup orientation="vertical" variant="outlined">
+              <ButtonGroup orientation="vertical" variant="outlined" sx={{ mt: 2}}>
                 <Button
                   variant="contained"
                   onClick={() => navigate(`/trips/${tripId}/activities/new`)}
