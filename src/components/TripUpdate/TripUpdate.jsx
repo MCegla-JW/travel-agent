@@ -67,11 +67,11 @@ const TripUpdate = () => {
     e.preventDefault()
     const dateErrors = validateDates(formData.startDate, formData.endDate)
     if (Object.keys(dateErrors).length > 0) {
-    setErrorData(dateErrors)
-    return
+      setErrorData(dateErrors)
+      return
     }
     const submissionData = {
-      ...formData, 
+      ...formData,
       startDate: new Date(formData.startDate).toISOString(),
       endDate: new Date(formData.endDate).toISOString(),
     }
@@ -95,12 +95,12 @@ const TripUpdate = () => {
     navigate('/trips')
   }
 
-  const handleAddActivities = () => {
-    console.log('Add Activities')
+  const handleManageActivities = () => {
+    navigate(`/trips/${tripId}/activities`)
   }
 
   const handleDeleteTrip = () => {
-    console.log('Add Activities')
+    console.log('Delete Trip not implemented')
   }
 
   if (!user) return <Navigate to="/auth/sign-in" />
@@ -113,6 +113,7 @@ const TripUpdate = () => {
         alignItems: 'center',
         p: 2,
         width: '100%',
+        width: '100%',
       }}
     >
       <Paper
@@ -124,18 +125,11 @@ const TripUpdate = () => {
           bgcolor: '#F5F5F5',
         }}
       >
-        <Typography
-          variant="h5"
-          textAlign="center"
-          className="subheader"
-          p={3}
-          gutterBottom
-        >
+        <Typography variant="h5" align="center" gutterBottom>
           Edit your dream
         </Typography>
         {isLoading ? (
           <Box
-            className="information"
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -148,7 +142,6 @@ const TripUpdate = () => {
         ) : (
           <>
             <Stack
-              className="information"
               component="form"
               spacing={2}
               onSubmit={handleSubmit}
@@ -156,7 +149,7 @@ const TripUpdate = () => {
             >
               <TextField
                 label="Title"
-                variant="outlined"
+                variant="filled"
                 type="text"
                 name="title"
                 value={formData.title}
@@ -170,56 +163,69 @@ const TripUpdate = () => {
 
               <TextField
                 label="Description"
-                variant="outlined"
+                variant="filled"
                 type="text"
+                multiline
+                rows={3}
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 fullWidth
-                required
               />
               {errorData.description && (
-                <Typography sx={{ color: 'error.main', fontWeight: 'medium'}} className="error-message">{errorData.description}</Typography>
+                <Typography
+                  sx={{ color: 'error.main', fontWeight: 'medium' }}
+                  className="error-message"
+                >
+                  {errorData.description}
+                </Typography>
               )}
 
               <TextField
                 label="Location"
-                variant="outlined"
+                variant="filled"
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
                 fullWidth
-                required
               />
               {errorData.location && (
-                <Typography sx={{ color: 'error.main', fontWeight: 'medium'}} className="error-message">{errorData.location}</Typography>
+                <Typography
+                  sx={{ color: 'error.main', fontWeight: 'medium' }}
+                  className="error-message"
+                >
+                  {errorData.location}
+                </Typography>
               )}
               <TextField
                 label="Start Date"
-                variant="outlined"
-                type="date"
+                variant="filled"
+                type="text"
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
                 fullWidth
-                required
               />
               {errorData.startDate && (
-                <Typography sx={{ color: 'error.main', fontWeight: 'medium'}} className="error-message">{errorData.startDate}</Typography>
+                <Typography
+                  sx={{ color: 'error.main', fontWeight: 'medium' }}
+                  className="error-message"
+                >
+                  {errorData.startDate}
+                </Typography>
               )}
               <TextField
                 label="End Date"
-                variant="outlined"
-                type="date"
+                variant="filled"
+                type="text"
                 name="endDate"
                 value={formData.endDate}
                 onChange={handleChange}
                 fullWidth
-                required
               />
               {errorData.endDate && (
-                <Typography sx={{ color: 'error.main', fontWeight: 'medium'}} className="error-message">{errorData.endDate}</Typography>
+                <p className="error-message">{errorData.endDate}</p>
               )}
               <Stack spacing={1} mt={2} flexWrap="wrap" justifyContent="center">
                 <Button
@@ -227,51 +233,17 @@ const TripUpdate = () => {
                   className="primary"
                   type="submit"
                   form="tripForm"
-                  sx={{
-                    flex: 1,
-                    minWidth: 120,
-                    fontSize: { xs: '0.7rem', sm: '0.875rem', md: '1rem' },
-                  }}
                 >
                   Confirm changes
                 </Button>
-                <Button
-                  variant="contained"
-                  className="secondary"
-                  onClick={handleAddActivities}
-                  sx={{
-                    flex: 1,
-                    minWidth: 120,
-                    fontSize: { xs: '0.7rem', sm: '0.875rem', md: '1rem' },
-                  }}
-                  disabled
-                >
-                  Add activity
+                <Button variant="outlined" onClick={handleManageActivities}>
+                  Manage activities
                 </Button>
-                <Button
-                  variant="contained"
-                  className="secondary"
-                  onClick={handleDeleteTrip}
-                  sx={{
-                    flex: 1,
-                    minWidth: 120,
-                    fontSize: { xs: '0.7rem', sm: '0.875rem', md: '1rem' },
-                  }}
-                  disabled
-                >
+                <Button variant="outlined" onClick={handleDeleteTrip} disabled>
                   Delete trip
                 </Button>
-                <Button
-                  variant="contained"
-                  className="secondary"
-                  onClick={handleReturnToOverview}
-                  sx={{
-                    flex: 1,
-                    minWidth: 120,
-                    fontSize: { xs: '0.7rem', sm: '0.875rem', md: '1rem' },
-                  }}
-                >
-                  Return to Overview
+                <Button variant="outlined" onClick={handleReturnToOverview}>
+                  Return to overview
                 </Button>
               </Stack>
             </Stack>

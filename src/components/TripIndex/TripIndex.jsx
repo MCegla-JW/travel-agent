@@ -103,13 +103,8 @@ const TripIndex = () => {
         >
           Create new trip
         </Button>
-        <Button
-          variant="contained"
-          className="secondary"
-          onClick={handleReviewPastTrip}
-          disabled
-        >
-          Review past trip
+        <Button variant="outlined" onClick={handleReviewPastTrip} disabled>
+          Review trip
         </Button>
         </Stack>
       </Box>
