@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react'
 import { useParams, useNavigate, Navigate } from 'react-router'
 
 import { UserContext } from '../../contexts/UserContext.jsx'
-import { tripUpdate, tripShow } from '../../services/trips.js'
+import { tripUpdate, tripShow, tripDelete } from '../../services/trips.js'
 import validateDates from '../../services/dateValidation.js'
 
 import {
@@ -28,6 +28,7 @@ const TripUpdate = () => {
   const [formData, setFormData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [errorData, setErrorData] = useState({})
+  const [isToDelete, setIsToDelete] = useState(false)
   const { tripId } = useParams()
   const navigate = useNavigate()
 
@@ -91,16 +92,9 @@ const TripUpdate = () => {
     }
   }
 
-  const handleReturnToOverview = () => {
+  const handleDeleteTrip = async () => {
+    await tripDelete(tripId)
     navigate('/trips')
-  }
-
-  const handleManageActivities = () => {
-    navigate(`/trips/${tripId}/activities`)
-  }
-
-  const handleDeleteTrip = () => {
-    console.log('Delete Trip not implemented')
   }
 
   if (!user) return <Navigate to="/auth/sign-in" />
@@ -234,16 +228,34 @@ const TripUpdate = () => {
                   type="submit"
                   form="tripForm"
                 >
-                  Confirm changes
+                  Confirm
                 </Button>
-                <Button variant="outlined" onClick={handleManageActivities}>
-                  Manage activities
+                <Button
+                  variant="outlined"
+                  onClick={() => navigate(`/trips/${tripId}/activities`)}
+                >
+                  Activities
                 </Button>
-                <Button variant="outlined" onClick={handleDeleteTrip} disabled>
-                  Delete trip
-                </Button>
-                <Button variant="outlined" onClick={handleReturnToOverview}>
-                  Return to overview
+                {!isToDelete ? (
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setIsToDelete(true)
+                    }}
+                  >
+                    Delete
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={handleDeleteTrip}
+                  >
+                    Repeat to delete
+                  </Button>
+                )}
+                <Button variant="outlined" onClick={() => navigate('/trips')}>
+                  Return
                 </Button>
               </Stack>
             </Stack>
