@@ -102,7 +102,7 @@ The project requirements included:
 - Routing Table: I created the routing table to define the routes required for the single-page application
 - Project Management: I set up the Trello board for task management 
 - Project Set-up: My partner created the GitHub repositories and handled the initial project configuration
-- ESlint - we both installed and configured ESLint to ensure our code followed consistent styling and best practices
+- ESlint: We both installed and configured ESLint to ensure our code followed consistent styling and best practices
 - Task Delegation: We split the tasks so we each got a chance to work on both the front and the back end 
 
 ## Approach taken:
