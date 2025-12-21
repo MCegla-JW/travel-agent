@@ -132,7 +132,7 @@ The project requirements included:
 
 # Build/Code Process
 
-## Used localStorgae to store a token in the browser and get the user a token 
+## Used localStorage to store a token in the browser and get the user a token 
 
 Used the setItem, getItem and removeItem methods on localStorage to store the authentication token in the browser and remove it when no longer needed. I then created a getUserFromToken service function to extract user information from the token, allowing access to protected routes. The function also checks the token's validity each time it's accessed and removes it if it has expired.
 
