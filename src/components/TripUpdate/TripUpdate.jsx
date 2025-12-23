@@ -121,7 +121,7 @@ const TripUpdate = () => {
         }}
       >
         <Typography variant="h5" align="center" gutterBottom>
-          Trip
+          Edit Trip
         </Typography>
         {isLoading ? (
           <Box
