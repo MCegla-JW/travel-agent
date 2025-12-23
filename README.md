@@ -8,7 +8,7 @@ This is my third project in my three-month intensive bootcamp at General Assembl
 
 *This app has two repositories: frontend and backend
 
-Code snippets in this ReadMe are from backend, for frontend, please go here - [Frontend ReadMe](https://github.com/MCegla-JW/travel-agent)
+Code snippets in this ReadMe are from frontend, for backend, please go here - [Backend ReadMe](https://github.com/MCegla-JW/travel-agent-api)
 
 # Deployment Link 
 
@@ -102,7 +102,7 @@ The project requirements included:
 - Routing Table: I created the routing table to define the routes required for the single-page application
 - Project Management: I set up the Trello board for task management 
 - Project Set-up: My partner created the GitHub repositories and handled the initial project configuration
-- ESlint: We both installed and configured ESLint to ensure our code followed consistent styling and best practices
+- ESlint - we both installed and configured ESLint to ensure our code followed consistent styling and best practices
 - Task Delegation: We split the tasks so we each got a chance to work on both the front and the back end 
 
 ## Approach taken:
@@ -113,28 +113,22 @@ The project requirements included:
 
 # My Work
 
-## My personal achievements are: 
+## Frontend Achievements
 
-- Coming up with the project theme 
-- Created the user Schema (used schema hooks to validate password) 
-- Developed backend login and register routes using JSON Web Token 
-- Implemented authentication on both backend and frontend
-- Used localStorgae to store a token in the browser
-- Set up the homepage on backend and frontend including the marketing content with React Slick carousel
-- Implemented React Slick carousel in the TripIndex file 
-- Created the boilerplate code for both backend (established server and database connections) and frontend to establish project structure
-- Conditionally rendered jsx messages based on user state 
-- Developed a NotFound component for handling unknown routes
-- Implemented error handling for both frontend and backend
-- Built the NavBar component for the frontend, sourced the logo 
-- Styled the app using Material UI for consistent and responsive design 
-- Created a date validation service function to handle form inputs and display dates in a user-friendly format on the frontend edit page
+- Set up the homepage including marketing content with React Slick carousel
+- Implemented React Slick carousel in the TripIndex file
+- Developed the NotFound component for handling unknown routes
+- Implemented frontend error handling and displayed user-friendly messages
+- Built the NavBar component and sourced the logo
+- Styled the app using Material UI for consistent and responsive design
+- Created a date conversion service function to handle form inputs and display dates in a user-friendly format
+- Implemented authentication handling on the frontend (fetching, storing, and reading JWT tokens from localStorage)
 
 # Build/Code Process
 
-## Used localStorage to store a token in the browser and get the user a token 
+## Using localStorage for Authentication Tokens 
 
-Used the setItem, getItem and removeItem methods on localStorage to store the authentication token in the browser and remove it when no longer needed. I then created a getUserFromToken service function to extract user information from the token, allowing access to protected routes. The function also checks the token's validity each time it's accessed and removes it if it has expired.
+I used localStorage to store the authentication token in the browser and created a helper function to retrieve the current user from the token. The function also checks if the token has expired and removes it if necessary, ensuring secure access to protected routes.
 
 ```js
 const tokenName = 'tripToken'
@@ -171,7 +165,7 @@ export const getUserFromToken = () => {
 I used useState and useContext to conditionally render frontend messages depending on user and page state. I also utilized MUI's CircularProgress to enhance user experience while the page loads. 
 
 ```js
-        </Box>
+
         {/* Loading Spinner */}
           {isLoading ? (
             <Box sx={{ mt: 6 }}>
@@ -188,11 +182,16 @@ I used useState and useContext to conditionally render frontend messages dependi
           <TripSlider trips={trips} />
           )}
         </Box>
+        </>
+        )}
 ```
+| Signed Out User View | Trips Page - empty | Trips Page - filled |
+|---------------------|-------------------|-------------------|
+| <img src='./src/assets/screenshots/main-page.png' alt="Main Page" width="250"> | <img src='./src/assets/screenshots/no-trips.png' alt="No Trips View" width="250"> | <img src='./src/assets/screenshots/trips.png' alt="Trips View" width="250"> |
 
-## Created a date validation service function to handle form inputs and display dates in a user-friendly format
+## Date validation service function
 
-I created a service function to users only enter valid dates, and they are notified if the input is invalid. This function was used in both TripCreate and TripUpdate.
+I created a service function to ensure users can only enter valid dates, and they are notified if the input is invalid. This function was used in both TripCreate and TripUpdate.
 
 ```js
  const validateDates = (startDate, endDate) => {
@@ -213,10 +212,13 @@ I created a service function to users only enter valid dates, and they are notif
 
   return errors
 }
-
 export default validateDates;
 ```
-I also create the formatDateForTextField function, used inside TripUpdate. As MongoDB expects dates in ISO string format, the date returned to the text field in the Trip Edit form was not user-friendly. This function converts the ISO date into a regular more readable format date.
+| Start Date View | End Date View |
+|---------------------|-------------------|
+| <img src='./src/assets/screenshots/start-date-past.png' alt="Start Date Cannot Be In Past" width="250"> | <img src='./src/assets/screenshots/end-date-conditional.png' alt="End Date Conditional" width="250"> |
+
+I also created the formatDateForTextField function, used inside TripUpdate. MongoDB stores dates in ISO string format, which is not very user-friendly for form inputs. This function converts an ISO date into a more readable format for display.
 
 ```js
 const formatDateForTextField = (isoDate) => {
@@ -228,7 +230,7 @@ const formatDateForTextField = (isoDate) => {
     return `${year}-${month}-${day}`
   }
 ```
-Finally, when the user submits the updated trip form, the dates are converted back to ISO string so MongoDB can store them correctly.
+Finally, when the user submits the updated trip form, the dates are converted back to ISO string so MongoDB can store them correctly:
 
 ```js
 const submissionData = {
@@ -238,7 +240,10 @@ const submissionData = {
 ```
 
 ## Screenshots
-TBC
+
+| Create Trip | Show All Trips | Update Trip | Delete Trip| Show All AI Generated Activites |
+|---------------------|-------------------|-------------------|-------------------|-------------------|
+| <img src='./src/assets/screenshots/create-trip.png' alt="Trip Create" width="250"> | <img src='./src/assets/screenshots/trips.png' alt="Trips" width="250"> | <img src='./src/assets/screenshots/edit-trip.png' alt="Trip Edit" width="250"> | <img src='./src/assets/screenshots/edit-and-delete.png' alt="Delete Trip" width="250"> | <img src='./src/assets/screenshots/activities-list.png' alt="Activities List" width="250">
 
 ## Challenges 
 
@@ -255,12 +260,12 @@ TBC
 
 ## Key Learnings/Takeaways
 
-- I really enjoyed collaborating with my partner on GitHub, it gave me a real-life example of how developers work together in a professional environment.
-- Using Git and GitHub extensively during this project improved my knowledge and confidence in version control.
-- Learning Material UI took me about half a day, but I was able to implement it quickly. I enjoyed using it because it helped ensure consistent styling across the app and made it easier to create a responsive design compared to plain CSS.
-- My partner was responsible for implementing the AI functionality, but he walked me through the code step by step. I now have a much better understanding of it and feel confident that I can implement similar features in my future projects.
-- Learning React and using a wide range of packages for it that I have never used before 
-Deployment using Heroku and Vercel.
+- I gained real-world experience collaborating on GitHub and managing feature branches
+- I improved confidence with Git, version control, and workflow best practices
+- I learned Material UI and implemented responsive, consistent designs quickly
+- I gained hands-on experience with React and multiple new packages
+- I understood AI integration by reviewing and applying code with my partner
+- I deployed full-stack applications using Heroku and Vercel
 
 ## Known Bugs
 
@@ -275,17 +280,17 @@ Deployment using Heroku and Vercel.
 - Use toastify for more interesting error messaging on front end 
 - Improve styling on AI feature - add a loading gif/icon as it takes a while to generate results 
 
-## Installation & Setup
+## Installation & Setup (Frontend)
 
-1. Clone the repo
--git clone https://github.com/MCegla-JW/travel-agent-api
+| Step | Action |
+|:-----|:------|
+| 1. Clone the repo | `git clone https://github.com/MCegla-JW/travel-agent && cd travel-agent` |
+| 2. Install dependencies | `npm install` |
+| 3. Create a `.env` file in the root directory with the following variables | `VITE_API_URL=https://travel-agent-app-153a0b5620f7.herokuapp.com` |
+| 4. Start the development server | `npm run dev` |
 
-2. Install dependencies
-- npm install
-
-  3. Create .env file with the following variables:
-- VITE_API_URL=https://travel-agent-app-153a0b5620f7.herokuapp.com/
-  
-4. Start the development server
-5. - npm run dev
+**Note:**  
+- Replace the API URL if running the backend locally (e.g. `http://localhost:3000`)  
+- Environment variables prefixed with `VITE_` are required for Vite  
+- No secret keys are stored in the frontend repository
 
