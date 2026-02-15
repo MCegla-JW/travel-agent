@@ -274,7 +274,7 @@ const submissionData = {
 ## Future Improvements 
 
 - Dark/Light mode
-- Users can set a background photo for trip cards or at lest adjust coolers themselves 
+- Users can set a background photo for trip cards or at least adjust colors themselves 
 - Connect to third party API to source weather data in each trip destination and display it for users 
 - User can edit and delete their profile - I have a featured branch started for this but I need to do more research on profile deletion 
 - Use toastify for more interesting error messaging on front end 
